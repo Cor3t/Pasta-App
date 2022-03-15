@@ -48,7 +48,7 @@ class Selection with ChangeNotifier {
   }
 }
 
-class AddToCart with ChangeNotifier {
+class CartProvider with ChangeNotifier {
   List<CartData> cartItems = [];
 
   void addToCart(CartData cartData) {
