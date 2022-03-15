@@ -122,9 +122,7 @@ class ViewPageState extends State<ViewPage> {
                                 spacing,
                                 Column(
                                   children: extras
-                                      .map((e) => ExtrasListTile(
-                                            extras: e,
-                                          ))
+                                      .map((e) => ExtrasListTile(extras: e))
                                       .toList(),
                                 ),
                               ])

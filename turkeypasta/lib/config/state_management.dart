@@ -29,7 +29,6 @@ class Counter with ChangeNotifier {
       total -= extra.price!;
     }
 
-    print(total);
     notifyListeners();
   }
 }
@@ -44,6 +43,16 @@ class Selection with ChangeNotifier {
     _value = !_value;
 
     total += extra.price!;
+
+    notifyListeners();
+  }
+}
+
+class AddToCart with ChangeNotifier {
+  List<CartData> cartItems = [];
+
+  void addToCart(CartData cartData) {
+    cartItems.add(cartData);
 
     notifyListeners();
   }

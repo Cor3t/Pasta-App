@@ -12,6 +12,13 @@ class Extras {
   Extras({this.title, this.price});
 }
 
+class CartData {
+  final String? title;
+  final int? price, amount;
+
+  CartData({this.title, this.price, this.amount});
+}
+
 List<MenuData> menu = [
   MenuData(title: "Jombo Combo", price: 3000),
   MenuData(title: "Pasta & Roasted Chicken", price: 2700),

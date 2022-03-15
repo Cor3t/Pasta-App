@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turkeypasta/config/template.dart';
+import 'package:turkeypasta/screen/cart_page.dart';
 import 'package:turkeypasta/screen/home.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Turkey Pasta',
       theme: appTheme,
-      home: HomePage(key: key),
+      home: CartPage(key: key),
     );
   }
 }
