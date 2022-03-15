@@ -1,8 +1,11 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:turkeypasta/config/data.dart';
+import 'package:turkeypasta/config/state_management.dart';
 import 'package:turkeypasta/config/template.dart';
 import 'package:turkeypasta/config/tools.dart';
+import 'package:turkeypasta/screen/cart_page.dart';
 import 'package:turkeypasta/screen/view_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,44 +22,53 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.menu),
-                  Badge(
-                      position: BadgePosition.topEnd(top: -11),
-                      badgeContent: const Text("1"),
-                      child: const Icon(Icons.shopping_cart)),
-                ],
-              ),
-            ),
-            space,
-            Expanded(
-                child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Text(
-                    message,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: const Icon(Icons.menu),
+        actions: [
+          Consumer<CartProvider>(builder: (context, cart, child) {
+            return Badge(
+              position: BadgePosition.topEnd(top: 0, end: -10),
+              badgeContent: Center(
+                  child: Padding(
+                padding: const EdgeInsets.all(2),
+                child: Text(
+                  cart.cartItems.length.toString(),
+                  style: const TextStyle(color: Colors.white, fontSize: 15),
                 ),
-                Container(),
-                Column(
-                    children: menu
-                        .map((e) => FoodItems(title: e.title, price: e.price))
-                        .toList())
-              ],
-            ))
-          ],
-        ),
+              )),
+              child: const Icon(Icons.shopping_cart),
+              showBadge: cart.cartItems.isNotEmpty,
+            );
+          }),
+          const SizedBox(width: 18),
+        ],
       ),
+      body: SafeArea(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+              child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                  message,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+              ),
+              Container(),
+              Column(
+                  children: menu
+                      .map((e) => FoodItems(title: e.title, price: e.price))
+                      .toList())
+            ],
+          ))
+        ],
+      )),
     );
   }
 }

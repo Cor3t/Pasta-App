@@ -134,6 +134,7 @@ class ViewPageState extends State<ViewPage> {
                   ),
                   Consumer<Counter>(builder: (context, count, child) {
                     return AddToCart(
+                      title: widget.title!,
                       fPrice: widget.price!,
                       count: count.count.toString(),
                     );
@@ -149,19 +150,23 @@ class ViewPageState extends State<ViewPage> {
 class AddToCart extends StatelessWidget {
   const AddToCart({
     Key? key,
+    required this.title,
     required this.fPrice,
     required this.count,
   }) : super(key: key);
 
   final int fPrice;
-  final String count;
+  final String count, title;
 
   @override
   Widget build(BuildContext context) {
     var _control = Provider.of<Counter>(context, listen: false);
+    var _addToCart = Provider.of<CartProvider>(context, listen: false);
     return Container(
-      padding: const EdgeInsets.only(top: 12, bottom: 20, left: 18, right: 18),
+      height: pcent(MediaQuery.of(context).size.height, 10),
+      padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _amountButton(
               function: () {
@@ -187,7 +192,12 @@ class AddToCart extends StatelessWidget {
                   backgroundColor: Colors.green,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8))),
-              onPressed: () {},
+              onPressed: () {
+                CartData cartData =
+                    CartData(title: title, price: fPrice, amount: 2);
+                _addToCart.addToCart(cartData);
+                print(_addToCart.cartItems);
+              },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
