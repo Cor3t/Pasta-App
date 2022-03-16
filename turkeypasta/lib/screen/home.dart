@@ -23,27 +23,30 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
         elevation: 0,
-        backgroundColor: Colors.white,
         leading: const Icon(Icons.menu),
         actions: [
           Consumer<CartProvider>(builder: (context, cart, child) {
             return Badge(
-              position: BadgePosition.topEnd(top: 0, end: -10),
+              position: BadgePosition.topEnd(top: 2, end: 2),
               badgeContent: Center(
-                  child: Padding(
-                padding: const EdgeInsets.all(2),
                 child: Text(
                   cart.cartItems.length.toString(),
-                  style: const TextStyle(color: Colors.white, fontSize: 15),
+                  style: cartBadgeTextStyle,
                 ),
-              )),
-              child: const Icon(Icons.shopping_cart),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CartPage()));
+                },
+              ),
               showBadge: cart.cartItems.isNotEmpty,
             );
           }),
-          const SizedBox(width: 18),
         ],
       ),
       body: SafeArea(

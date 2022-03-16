@@ -9,6 +9,9 @@ const subHeadColor = Colors.grey;
 
 // theme
 var appTheme = ThemeData(
+    appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white),
     iconTheme: const IconThemeData(color: textColor, size: 25),
     scaffoldBackgroundColor: Colors.white,
     textTheme: const TextTheme(
@@ -42,6 +45,8 @@ var buttonTextStyle2 = const TextStyle(
   fontWeight: FontWeight.w800,
   color: Colors.white,
 );
+
+var cartBadgeTextStyle = const TextStyle(color: Colors.white, fontSize: 14);
 
 double pcent(double size, double p) {
   double result = (size / 100) * p;

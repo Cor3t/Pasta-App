@@ -18,7 +18,6 @@ class CartPageState extends State<CartPage> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: burntOrange,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -32,7 +31,7 @@ class CartPageState extends State<CartPage> {
         children: [
           Expanded(
               child: Consumer<CartProvider>(builder: (context, value, child) {
-            return value.cartItems.length > 1
+            return value.cartItems.isNotEmpty
                 ? ListView.builder(
                     itemCount: value.cartItems.length,
                     itemBuilder: (context, index) {
@@ -44,7 +43,10 @@ class CartPageState extends State<CartPage> {
                     },
                   )
                 : const Center(
-                    child: Text("No Item"),
+                    child: Text(
+                      "No Item",
+                      style: TextStyle(fontSize: 25, color: Colors.grey),
+                    ),
                   );
           })),
           Container(

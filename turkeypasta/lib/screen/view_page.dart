@@ -196,7 +196,6 @@ class AddToCart extends StatelessWidget {
                 CartData cartData =
                     CartData(title: title, price: fPrice, amount: 2);
                 _addToCart.addToCart(cartData);
-                print(_addToCart.cartItems);
               },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
