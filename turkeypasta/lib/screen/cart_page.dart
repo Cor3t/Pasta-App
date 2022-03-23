@@ -24,7 +24,7 @@ class CartPageState extends State<CartPage> {
             Navigator.pop(context);
           },
         ),
-        title: const Text("Checkout"),
+        title: const Text("Cart"),
       ),
       body: SafeArea(
           child: Column(
@@ -35,10 +35,9 @@ class CartPageState extends State<CartPage> {
                 ? ListView.builder(
                     itemCount: value.cartItems.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        child: Row(
-                          children: [Text(value.cartItems[index].title!)],
-                        ),
+                      return ItemView(
+                        value: value.cartItems,
+                        index: index,
                       );
                     },
                   )
@@ -68,14 +67,104 @@ class CartPageState extends State<CartPage> {
                                 BorderRadius.all(Radius.circular(30)))),
                     onPressed: () {},
                     child: Text(
-                      "Checkout",
-                      style: buttonTextStyle1,
+                      "CHECKOUT",
+                      style: buttonTextStyle2,
                     ),
                   )
                 ],
               )),
         ],
       )),
+    );
+  }
+}
+
+class ItemView extends StatelessWidget {
+  final List? value;
+  final int? index;
+  const ItemView({
+    required this.value,
+    required this.index,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      height: 120,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Image(
+            image: AssetImage("assets/images/pasta.png"),
+            width: 100,
+          ),
+          const SizedBox(width: 15),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Flexible(
+                child: SizedBox(
+                  width: pcent(MediaQuery.of(context).size.width, 45),
+                  child: Text(
+                    value![index!].title!,
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  AmountButton(icon: Icons.remove),
+                  SizedBox(width: 10),
+                  Text("1"),
+                  SizedBox(width: 10),
+                  AmountButton(icon: Icons.add)
+                ],
+              )
+            ],
+          ),
+          const Spacer(),
+          Text(
+            "$priceSign${value![index!].price!}",
+            style: Theme.of(context).textTheme.headline2,
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class AmountButton extends StatelessWidget {
+  final IconData? icon;
+  // final Function? function;
+  const AmountButton({
+    this.icon,
+    // this.function,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 30,
+      height: 30,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          backgroundColor: const Color(0xFFF2EEED),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+        ),
+        onPressed: () {},
+        child: Icon(
+          icon,
+          size: 19,
+          color: Colors.black,
+        ),
+      ),
     );
   }
 }

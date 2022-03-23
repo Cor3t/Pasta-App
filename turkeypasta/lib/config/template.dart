@@ -10,6 +10,11 @@ const subHeadColor = Colors.grey;
 // theme
 var appTheme = ThemeData(
     appBarTheme: const AppBarTheme(
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+          fontSize: 24,
+        ),
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white),
     iconTheme: const IconThemeData(color: textColor, size: 25),
