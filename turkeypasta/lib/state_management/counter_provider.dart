@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:turkeypasta/config/data.dart';
+import 'package:turkeypasta/models/data.dart';
 
 class Counter with ChangeNotifier {
   int _count = 1;
@@ -28,31 +28,6 @@ class Counter with ChangeNotifier {
       extras.remove(extra);
       total -= extra.price!;
     }
-
-    notifyListeners();
-  }
-}
-
-class Selection with ChangeNotifier {
-  bool _value = false;
-
-  bool get value => _value;
-  int total = 0;
-
-  void isMarked(Extras extra) {
-    _value = !_value;
-
-    total += extra.price!;
-
-    notifyListeners();
-  }
-}
-
-class CartProvider with ChangeNotifier {
-  List<CartData> cartItems = [];
-
-  void addToCart(CartData cartData) {
-    cartItems.add(cartData);
 
     notifyListeners();
   }

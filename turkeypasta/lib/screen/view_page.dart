@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:turkeypasta/config/data.dart';
-import 'package:turkeypasta/config/state_management.dart';
+import 'package:turkeypasta/models/data.dart';
+import 'package:turkeypasta/config/snack_message.dart';
 import 'package:turkeypasta/config/template.dart';
+import 'package:turkeypasta/config/tools.dart';
+
+import '../state_management/counter_provider.dart';
+import '../state_management/selection_provider.dart';
 
 class ViewPage extends StatefulWidget {
   final String? title;
   final int? price;
+
   const ViewPage({this.title, this.price, Key? key}) : super(key: key);
 
   @override
@@ -15,7 +20,7 @@ class ViewPage extends StatefulWidget {
 
 class ViewPageState extends State<ViewPage> {
   var spacing = const SizedBox(height: 20);
-  var pads = const EdgeInsets.only(left: 18, right: 18);
+  var padding = const EdgeInsets.symmetric(horizontal: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +36,9 @@ class ViewPageState extends State<ViewPage> {
                     child: CustomScrollView(
                       slivers: [
                         SliverAppBar(
+                          leadingWidth: 50,
                           backgroundColor: Colors.white,
                           iconTheme: const IconThemeData(color: Colors.black),
-                          expandedHeight: 50,
                           floating: true,
                           leading: IconButton(
                               onPressed: () {
@@ -48,10 +53,11 @@ class ViewPageState extends State<ViewPage> {
                             children: [
                               const Image(
                                 image: AssetImage("assets/images/pasta.png"),
+                                height: 270,
                               ),
                               spacing,
                               Padding(
-                                padding: pads,
+                                padding: padding,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -99,7 +105,7 @@ class ViewPageState extends State<ViewPage> {
                               spacing,
                               Column(children: [
                                 Padding(
-                                  padding: pads,
+                                  padding: padding,
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -162,9 +168,10 @@ class AddToCart extends StatelessWidget {
   Widget build(BuildContext context) {
     var _control = Provider.of<Counter>(context, listen: false);
     var _addToCart = Provider.of<CartProvider>(context, listen: false);
+
     return Container(
       height: pcent(MediaQuery.of(context).size.height, 10),
-      padding: const EdgeInsets.symmetric(horizontal: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -173,7 +180,7 @@ class AddToCart extends StatelessWidget {
                 _control.count > 1 ? _control.decrement() : null;
               },
               icon: Icons.remove,
-              color: _control.count > 1 ? Colors.green : Colors.grey),
+              color: _control.count > 1 ? burntOrange : Colors.grey),
           const Spacer(flex: 2),
           Text(count, style: const TextStyle(fontSize: 20)),
           const Spacer(flex: 2),
@@ -182,20 +189,23 @@ class AddToCart extends StatelessWidget {
                 _control.increment();
               },
               icon: Icons.add,
-              color: Colors.green),
+              color: burntOrange),
           const Spacer(),
           TextButton(
               style: TextButton.styleFrom(
                   padding: EdgeInsets.symmetric(
                       horizontal: pcent(MediaQuery.of(context).size.width, 12),
                       vertical: 10),
-                  backgroundColor: Colors.green,
+                  backgroundColor: burntOrange,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8))),
               onPressed: () {
                 CartData cartData =
                     CartData(title: title, price: fPrice, amount: 2);
                 _addToCart.addToCart(cartData);
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(snackBar(addedToCartSnackbar));
               },
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -258,9 +268,10 @@ class ExtrasListTile extends StatelessWidget {
               },
               child: Container(
                 padding: const EdgeInsets.only(right: 10, top: 5, bottom: 5),
-                margin: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
+                margin: const EdgeInsets.only(bottom: 15, left: 20, right: 20),
                 decoration: const BoxDecoration(
                     color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
                     boxShadow: [
                       BoxShadow(color: Color(0xFFBDBDBD), blurRadius: 10.0)
                     ]),
